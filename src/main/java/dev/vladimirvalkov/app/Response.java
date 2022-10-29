@@ -9,6 +9,6 @@ public record Response(
 ) {
 
     public Response(int code, String content) {
-        this(code, content, null);
+        this(code, content, new HashMap<>());
     }
 }
