@@ -1,9 +1,11 @@
 package dev.vladimirvalkov.app;
 
+import java.util.HashMap;
+
 public record Response(
         int code,
         String content,
-        String[] headers
+        HashMap<String, String> headers
 ) {
 
     public Response(int code, String content) {
