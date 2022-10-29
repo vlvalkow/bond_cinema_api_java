@@ -15,15 +15,11 @@ public class Route {
     }
 
     public boolean match(Request request) {
-
         if (!this.httpMethod.equals(request.method())) {
             return false;
         }
 
-        Pattern pattern = Pattern.compile(this.urlPattern);
-        Matcher matcher = pattern.matcher(request.uri().toString());
-
-        return matcher.find();
+       return Pattern.matches(this.urlPattern, request.uri().toString());
     }
 
     public String getName() {
