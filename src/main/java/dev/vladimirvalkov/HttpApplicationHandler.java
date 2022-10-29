@@ -19,6 +19,7 @@ public class HttpApplicationHandler implements HttpHandler {
 
         Kernel kernel = new Kernel(
                 new Router(new Route[]{
+                        new Route("index", "GET", "/"),
                         new Route("getBookings", "GET", "/bookings")
                 }),
                 new Controller()
