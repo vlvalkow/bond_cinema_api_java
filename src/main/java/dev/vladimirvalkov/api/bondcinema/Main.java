@@ -1,4 +1,4 @@
-package dev.vladimirvalkov;
+package dev.vladimirvalkov.api.bondcinema;
 
 import com.sun.net.httpserver.HttpServer;
 

@@ -1,4 +1,4 @@
-package dev.vladimirvalkov.app;
+package dev.vladimirvalkov.api.bondcinema.app;
 
 public class Router {
     private final Route[] routes;

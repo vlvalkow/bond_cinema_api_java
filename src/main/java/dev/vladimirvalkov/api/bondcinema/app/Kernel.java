@@ -1,4 +1,4 @@
-package dev.vladimirvalkov.app;
+package dev.vladimirvalkov.api.bondcinema.app;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

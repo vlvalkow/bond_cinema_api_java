@@ -1,4 +1,4 @@
-package dev.vladimirvalkov.app;
+package dev.vladimirvalkov.api.bondcinema.app;
 
 import com.sun.net.httpserver.Headers;
 import org.junit.jupiter.api.BeforeEach;
