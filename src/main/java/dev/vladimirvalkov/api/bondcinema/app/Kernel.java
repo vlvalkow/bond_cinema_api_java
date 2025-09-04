@@ -29,8 +29,12 @@ public class Kernel {
 
         try {
             return (Response) method.invoke(this.controller, request);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            return new Response(404, "Not Found");
+        } catch (IllegalAccessException e) {
+            return new Response(500, "Server error: handler not accessible");
+        } catch (InvocationTargetException e) {
+            Throwable cause = e.getCause();
+            String msg = (cause != null ? cause.getClass().getSimpleName() + ": " + cause.getMessage() : "Unknown handler error");
+            return new Response(500, "Server error: " + msg);
         }
     }
 }

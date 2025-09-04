@@ -1,5 +1,10 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+application {
+  mainClass = 'dev.vladimirvalkov.api.bondcinema.Main'
 }
 
 group 'dev.vladimirvalkov'
@@ -17,4 +22,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        exceptionFormat "full"
+    }
 }

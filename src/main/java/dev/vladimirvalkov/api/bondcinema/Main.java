@@ -13,5 +13,7 @@ public class Main {
 
         server.setExecutor(null); // creates a default executor
         server.start();
+
+        System.out.println("Server started on http://localhost:8080");
     }
 }
