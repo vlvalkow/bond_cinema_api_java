@@ -9,6 +9,19 @@ import java.io.OutputStream;
 import java.util.Map;
 
 public class HttpApplicationHandler implements HttpHandler {
+    private final Controller controller;
+
+    public HttpApplicationHandler() {
+        DatabaseConfig config = DatabaseConfig.fromEnv();
+
+        if (config.url() != null) {
+            // Run migrations once on startup
+            DatabaseMigrator.migrate(config);
+            this.controller = new Controller(new Database(config.url(), config.user(), config.pass()));
+        } else {
+            this.controller = new Controller();
+        }
+    }
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Request request = new Request(
@@ -18,12 +31,13 @@ public class HttpApplicationHandler implements HttpHandler {
                 exchange.getRequestBody()
         );
 
-        Kernel kernel = new Kernel(
+    Kernel kernel = new Kernel(
                 new Router(new Route[]{
                         new Route("index", "GET", "/"),
-                        new Route("getBookings", "GET", "/bookings")
+                        new Route("getBookings", "GET", "/bookings"),
+                        new Route("healthcheck", "GET", "/healthcheck")
                 }),
-                new Controller()
+        this.controller
         );
 
         Response response = kernel.handleRequest(request);

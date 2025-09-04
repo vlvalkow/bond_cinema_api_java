@@ -86,3 +86,47 @@ docker compose down
 Notes:
 - Both services expose port `8080`; run one at a time or change the host port mapping.
 - `app-dev` will re-run on container restart, but Gradle run does not hot-reload by default.
+
+## Database (MySQL) - Local Development
+
+This project includes a MySQL service via Docker Compose for local dev.
+
+Start MySQL only:
+```
+docker compose up -d mysql
+```
+
+Default credentials:
+- DB: `bondcinema`
+- User: `app`
+- Password: `app`
+- Root password: `root`
+
+JDBC URL examples:
+ - Running app on your host (outside Docker):
+```
+jdbc:mysql://localhost:3306/bondcinema?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+```
+ - Running app inside Docker Compose (service name is `mysql`):
+```
+jdbc:mysql://mysql:3306/bondcinema?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+```
+
+Basic Java usage with the provided `Database` helper:
+```java
+// Example: initialize a pool and get a connection
+var db = new Database(
+	"jdbc:mysql://localhost:3306/bondcinema?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC",
+	"app",
+	"app"
+);
+try (var conn = db.getConnection(); var stmt = conn.createStatement()) {
+	stmt.execute("CREATE TABLE IF NOT EXISTS demo (id INT PRIMARY KEY, name VARCHAR(255))");
+}
+db.close();
+```
+
+Bring all services up (app + db):
+```
+docker compose up --build
+```

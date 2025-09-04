@@ -25,6 +25,6 @@ public class KernelTest {
         Kernel kernel = new Kernel(new Router(new Route[]{new Route("index", "GET", "/")}), new Controller());
         Response response = kernel.handleRequest(this.request);
 
-        assertEquals("{\"message\":\"Hello World\"}", response.content());
+        assertEquals("{\"message\":\"Welcome to Bond Cinema!\"}", response.content());
     }
 }

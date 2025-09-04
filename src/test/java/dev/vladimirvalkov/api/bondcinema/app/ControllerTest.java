@@ -25,6 +25,6 @@ public class ControllerTest {
         Controller controller = new Controller();
         Response response = controller.index(this.request);
 
-        assertEquals("{\"message\":\"Hello World\"}", response.content());
+        assertEquals("{\"message\":\"Welcome to Bond Cinema!\"}", response.content());
     }
 }

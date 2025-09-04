@@ -2,23 +2,37 @@ version: "3.9"
 
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    # Suitable for running the packaged app
-    restart: unless-stopped
-
-  app-dev:
     image: eclipse-temurin:17-jdk
     working_dir: /workspace
     command: ["/bin/sh", "-c", "chmod +x ./gradlew && ./gradlew run"]
     environment:
       - GRADLE_USER_HOME=/workspace/.gradle
+      - DB_URL=jdbc:mysql://mysql:3306/bondcinema?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - DB_USER=app
+      - DB_PASS=app
     volumes:
       - ./:/workspace
     ports:
       - "8080:8080"
     # Stop the dev container when you stop compose
     restart: "no"
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: bondcinema
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql_data:
