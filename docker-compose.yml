@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    # Suitable for running the packaged app
+    restart: unless-stopped
+
+  app-dev:
+    image: eclipse-temurin:17-jdk
+    working_dir: /workspace
+    command: ["/bin/sh", "-c", "chmod +x ./gradlew && ./gradlew run"]
+    environment:
+      - GRADLE_USER_HOME=/workspace/.gradle
+    volumes:
+      - ./:/workspace
+    ports:
+      - "8080:8080"
+    # Stop the dev container when you stop compose
+    restart: "no"
